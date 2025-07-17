@@ -8,11 +8,16 @@ use warnings;
 use DBI;
 use POSIX qw(strftime);
 use File::Path qw(make_path);
+use Cwd 'abs_path';
+use File::Basename;
 
-# Paths
-my $db_path   = "../tickets.db";
-my $log_dir   = "../data/diagnostics_output";
-my $log_file  = "$log_dir/diagnostics.log";
+# Get absolute path of this script
+my $script_dir = dirname(abs_path($0));
+
+# Build absolute paths relative to script location
+my $db_path  = "$script_dir/../tickets.db";
+my $log_dir  = "$script_dir/../data/diagnostics_output";
+my $log_file = "$log_dir/diagnostics.log";
 
 # Ensure log directory exists
 if ( !-d $log_dir ) {
