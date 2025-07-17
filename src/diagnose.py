@@ -6,6 +6,7 @@ import platform
 import datetime
 import json
 from pathlib import Path
+from datetime import datetime, timezone
 
 # Paths
 TICKETS_PATH = Path(__file__).resolve().parent.parent / "data" / "sample_tickets.json"
@@ -39,7 +40,7 @@ def run_diagnostics():
             endpoint = t.get("endpoint")
             ticket_id = t.get("id")
             status = "SUCCESS" if ping(endpoint) else "FAIL"
-            timestamp = datetime.datetime.utcnow().isoformat()
+            timestamp = datetime.now(timezone.utc).isoformat()
             log.write(f"{timestamp} | Ticket #{ticket_id} | {endpoint} | {status}\n")
             print(f"[INFO] Ticket #{ticket_id} ({endpoint}) => {status}")
 

@@ -1,20 +1,24 @@
 #analyze.pl
-#Author: Saad Khan
+#Author : Saad Khan
 
 #!/usr/bin/perl
 use strict;
 use warnings;
 
-# Path to the diagnostics log
-my $log_file = "../data/diagnostics_output/diagnostics.log";
+# Allow passing a log file path as an argument
+my $log_file = $ARGV[0] // "../data/diagnostics_output/diagnostics.log";
 
-# Try opening the log file
+# Check if file exists
+unless (-e $log_file) {
+    die "Log file not found: $log_file\n";
+}
+
 open(my $fh, '<', $log_file) or die "Could not open log file: $!";
 
 my $success = 0;
 my $fail = 0;
 
-# Read the log line by line
+# Read each line of the log
 while (my $line = <$fh>) {
     if ($line =~ /SUCCESS/) {
         $success++;
@@ -25,8 +29,9 @@ while (my $line = <$fh>) {
 
 close($fh);
 
-# Print the summary report
+# Print summary
 print "=== Diagnostics Analysis Report ===\n";
+print "Log file: $log_file\n";
 print "Successful pings: $success\n";
 print "Failed pings: $fail\n";
 print "-----------------------------------\n";
