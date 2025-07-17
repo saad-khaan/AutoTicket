@@ -52,5 +52,43 @@ def add_ticket():
     # If GET request, show the form
     return render_template("add_ticket.html")
 
+@app.route("/delete-confirm/<int:ticket_id>", methods=["GET"])
+def delete_confirm(ticket_id):
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    c = conn.cursor()
+    c.execute('SELECT * FROM tickets WHERE id = ?', (ticket_id,))
+    ticket = c.fetchone()
+    conn.close()
+    return render_template("delete_ticket.html", ticket=ticket)
+
+@app.route("/delete-ticket/<int:ticket_id>", methods=["POST"])
+def delete_ticket(ticket_id):
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+    c.execute('DELETE FROM tickets WHERE id = ?', (ticket_id,))
+    conn.commit()
+    conn.close()
+    return redirect(url_for("index"))
+
+@app.route("/edit-ticket/<int:ticket_id>", methods=["GET", "POST"])
+def edit_ticket(ticket_id):
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    c = conn.cursor()
+
+    if request.method == "POST":
+        title = request.form.get("title")
+        endpoint = request.form.get("endpoint")
+        c.execute('UPDATE tickets SET title = ?, endpoint = ? WHERE id = ?', (title, endpoint, ticket_id))
+        conn.commit()
+        conn.close()
+        return redirect(url_for("index"))
+
+    c.execute('SELECT * FROM tickets WHERE id = ?', (ticket_id,))
+    ticket = c.fetchone()
+    conn.close()
+    return render_template("edit_ticket.html", ticket=ticket)
+
 if __name__ == "__main__":
     app.run(debug=True)

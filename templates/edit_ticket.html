@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Ticket</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='button.css') }}">
+</head>
+<body style="background-color:#0f172a; font-family:sans-serif; color:#f1f5f9;">
+
+    <h1 style="text-align:center; color:#60a5fa;">Edit Ticket #{{ ticket.id }}</h1>
+    <p style="text-align:center; max-width:600px; margin:0 auto 30px; color:#cbd5e1;">
+        Update the details below and click <strong>Save Changes</strong>.
+    </p>
+
+    <div style="
+        max-width:500px;
+        margin:50px auto;
+        background-color:#1e293b;
+        padding:20px;
+        border-radius:8px;
+        box-shadow:0 2px 8px rgba(0,0,0,0.4);
+    ">
+        <form method="POST">
+            <label for="title" style="display:block; margin-bottom:8px; font-weight:600;">Ticket Title:</label>
+            <input type="text" id="title" name="title" value="{{ ticket.title }}" required
+                style="width:100%; padding:10px; margin-bottom:20px; border:none; border-radius:4px; background-color:#334155; color:#f1f5f9;">
+
+            <label for="endpoint" style="display:block; margin-bottom:8px; font-weight:600;">Endpoint (IP or Host):</label>
+            <input type="text" id="endpoint" name="endpoint" value="{{ ticket.endpoint }}" required
+                style="width:100%; padding:10px; margin-bottom:20px; border:none; border-radius:4px; background-color:#334155; color:#f1f5f9;">
+
+            <div style="text-align:center;">
+                <button type="submit" class="diagnose-button">💾 Save Changes</button>
+                <a href="{{ url_for('index') }}" style="
+                    display:inline-block;
+                    background-color:#64748b;
+                    color:#fff;
+                    padding:10px 20px;
+                    border-radius:4px;
+                    text-decoration:none;
+                    margin-left:10px;
+                ">Cancel</a>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>
