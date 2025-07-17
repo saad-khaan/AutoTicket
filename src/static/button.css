@@ -1,0 +1,16 @@
+.diagnose-button {
+    background-color: #3b82f6; /* blue accent */
+    border: none;
+    color: #f1f5f9;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+}
+.diagnose-button:hover {
+    background-color: #2563eb;
+    transform: translateY(-1px);
+}

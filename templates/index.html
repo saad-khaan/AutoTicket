@@ -1,13 +1,23 @@
+<!-- index.html -->
+
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <title>AutoTicket Dashboard</title>
-    <!-- Link CSS -->
+    <!-- Main CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Button CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='button.css') }}">
 </head>
 <body>
     <h1>AutoTicket Dashboard</h1>
+
+    <!-- Run Diagnostics Button -->
+    <form method="POST" action="{{ url_for('run_diagnostics') }}" style="text-align:center; margin-bottom: 30px;">
+        <button type="submit" class="diagnose-button">Run Diagnostics</button>
+    </form>
+
     <table>
         <thead>
             <tr>
