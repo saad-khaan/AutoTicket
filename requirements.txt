@@ -1,0 +1,4 @@
+# List of Python dependencies needed.
+
+flask
+gunicorn
