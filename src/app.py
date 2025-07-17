@@ -5,6 +5,7 @@
 import json
 import subprocess 
 import sqlite3
+import os
 from pathlib import Path
 from flask import Flask, render_template, redirect, url_for, request
 
@@ -14,6 +15,21 @@ app = Flask(__name__, template_folder=str(TEMPLATE_DIR))
 
 TICKETS_FILE = Path(__file__).resolve().parent.parent / "data" / "tickets_with_results.json"
 DB_PATH = Path(__file__).resolve().parent.parent / "tickets.db"
+
+if not os.path.exists(DB_PATH):
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+    c.execute('''
+        CREATE TABLE tickets (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT NOT NULL,
+            endpoint TEXT NOT NULL,
+            diagnostic_status TEXT DEFAULT 'UNKNOWN'
+        )
+    ''')
+    conn.commit()
+    conn.close()
+    print("[INFO] Created a fresh tickets.db with an empty tickets table.")
 
 @app.route("/")
 def index():
