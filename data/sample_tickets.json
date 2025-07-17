@@ -1,0 +1,12 @@
+[
+  {
+    "id": 101,
+    "title": "High latency on Server A",
+    "endpoint": "8.8.8.8"
+  },
+  {
+    "id": 102,
+    "title": "DNS resolution failure",
+    "endpoint": "1.1.1.1"
+  }
+]
