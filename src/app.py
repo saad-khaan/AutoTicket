@@ -28,8 +28,8 @@ def index():
 @app.route("/run-diagnostics", methods=["POST"])
 def run_diagnostics():
     """Run the diagnostics and update tickets, then redirect to dashboard."""
-    # Run diagnose.py
-    subprocess.run(["python", "src/diagnose.py"])
+    # Run diagnose.pl
+    subprocess.run(["perl", "src/diagnose.pl"])
     # Run update_ticket.py
     subprocess.run(["python", "src/update_ticket.py"])
     return redirect(url_for("index"))
