@@ -1,16 +1,14 @@
-#
 # diagnose.py
-# Author : Saad Khan
+# Author: Saad Khan
 
 import subprocess
 import platform
-import datetime
-import json
+import sqlite3
 from pathlib import Path
 from datetime import datetime, timezone
 
 # Paths
-TICKETS_PATH = Path(__file__).resolve().parent.parent / "data" / "sample_tickets.json"
+DB_PATH = Path(__file__).resolve().parent.parent / "tickets.db"
 OUTPUT_DIR = Path(__file__).resolve().parent.parent / "data" / "diagnostics_output"
 OUTPUT_LOG = OUTPUT_DIR / "diagnostics.log"
 
@@ -32,14 +30,15 @@ def ping(host: str) -> bool:
         return False
 
 def run_diagnostics():
-    # Load tickets
-    with open(TICKETS_PATH, "r") as f:
-        tickets = json.load(f)
+    # Load tickets from the database instead of JSON
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+    c.execute("SELECT id, endpoint FROM tickets")
+    tickets = c.fetchall()
+    conn.close()
 
     with open(OUTPUT_LOG, "w") as log:
-        for t in tickets:
-            endpoint = t.get("endpoint")
-            ticket_id = t.get("id")
+        for ticket_id, endpoint in tickets:
             status = "SUCCESS" if ping(endpoint) else "FAIL"
             timestamp = datetime.now(timezone.utc).isoformat()
             log.write(f"{timestamp} | Ticket #{ticket_id} | {endpoint} | {status}\n")

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Ticket</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='button.css') }}">
+    <style>
+        .form-container {
+            max-width: 500px;
+            margin: 50px auto;
+            background-color: #1e293b;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #334155;
+            color: #f1f5f9;
+        }
+        .form-actions {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align:center; color:#60a5fa;">Add New Ticket</h1>
+    <div class="form-container">
+        <form method="POST">
+            <label for="title">Ticket Title:</label>
+            <input type="text" id="title" name="title" required>
+
+            <label for="endpoint">Endpoint (IP or Host):</label>
+            <input type="text" id="endpoint" name="endpoint" required>
+
+            <div class="form-actions">
+                <button type="submit" class="diagnose-button">Add Ticket</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

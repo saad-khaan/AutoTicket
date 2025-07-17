@@ -34,5 +34,23 @@ def run_diagnostics():
     subprocess.run(["python", "src/update_ticket.py"])
     return redirect(url_for("index"))
 
+@app.route("/add-ticket", methods=["GET", "POST"])
+def add_ticket():
+    if request.method == "POST":
+        title = request.form.get("title")
+        endpoint = request.form.get("endpoint")
+        
+        if title and endpoint:
+            conn = sqlite3.connect(DB_PATH)
+            c = conn.cursor()
+            c.execute('INSERT INTO tickets (title, endpoint, diagnostic_status) VALUES (?, ?, ?)',
+                      (title, endpoint, "UNKNOWN"))
+            conn.commit()
+            conn.close()
+            return redirect(url_for("index"))
+    
+    # If GET request, show the form
+    return render_template("add_ticket.html")
+
 if __name__ == "__main__":
     app.run(debug=True)
